@@ -1,0 +1,28 @@
+# Local planning docs (intentionally kept out of the public repo)
+docs/development-plan.md
+
+# Virtual environments
+.venv/
+venv/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# Generated data and artifacts (regenerable/downloadable)
+data/raw/*
+data/processed/*
+data/quality/*
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+!data/quality/.gitkeep
+
+# Local configuration and OS noise
+.env
+.DS_Store

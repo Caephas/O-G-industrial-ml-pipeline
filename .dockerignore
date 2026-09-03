@@ -1,0 +1,13 @@
+.git
+.venv
+venv
+__pycache__
+*.py[cod]
+.pytest_cache
+.ruff_cache
+data/raw
+data/processed
+data/quality
+artifacts
+docs/development-plan.md
+.DS_Store
