@@ -25,5 +25,14 @@ All notable changes to this project are documented here.
 - Evaluation harness: labels, engine-disjoint splits, metric implementations,
   baseline models, committed thresholds (FR-04)
 - Feature engineering and evaluation harness tests (FR-17)
+- Model families: Isolation Forest anomaly detection with adaptive
+  contamination, Random Forest + Platt-calibrated failure prediction, RUL
+  point estimates with gradient-boosted quantile intervals (scale-calibrated
+  on an engine-disjoint split), and per-sensor ARIMA/SARIMA forecasting
+  (FR-05, FR-06, FR-07, FR-08)
+- 4-model DAG orchestration with deterministic runs, threshold gates, and
+  self-describing joblib artifacts (FR-09, FR-10, FR-16)
+- CLI (`train` / `evaluate` / `predict`) and model tests (FR-17)
+- Training runbook (FR-18)
 - ADRs for typed contracts, dependency pinning, and repository licensing
   (FR-16)

@@ -3,7 +3,7 @@ VENV ?= .venv
 PY := $(VENV)/bin/python
 PIP := $(VENV)/bin/pip
 
-.PHONY: help setup install test lint check fetch baselines clean
+.PHONY: help setup install test lint check fetch baselines train clean
 
 help: ## Show available targets
 	@grep -E '^[a-zA-Z_-]+:.*?## ' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "  %-10s %s\n", $$1, $$2}'
@@ -29,6 +29,9 @@ fetch: ## Download and verify the NASA C-MAPSS dataset
 
 baselines: ## Build features and compute FD002 baselines
 	$(PY) scripts/run_baselines.py
+
+train: ## Train and evaluate the 4-model DAG
+	$(PY) -m pipeline.cli train
 
 clean: ## Remove local caches and build outputs
 	rm -rf .pytest_cache .ruff_cache build dist *.egg-info

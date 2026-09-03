@@ -1,0 +1,104 @@
+{
+  "run_id": "run-20260903-095304-42",
+  "subset": "FD002",
+  "seed": 42,
+  "generated_at": "2026-09-03T09:53:07.553788+00:00",
+  "git_sha": "a039686",
+  "splits": {
+    "train_engines": 208,
+    "validation_engines": 52
+  },
+  "model_configs": {
+    "anomaly": {
+      "family": "anomaly",
+      "algorithm": "IsolationForest",
+      "n_estimators": 200,
+      "adaptive_contamination": 0.43712616336805155,
+      "seed": 42
+    },
+    "failure": {
+      "family": "failure",
+      "algorithm": "RandomForest + Platt sigmoid calibration",
+      "n_estimators": 200,
+      "class_weight": "balanced",
+      "calibration_split": "engine-disjoint",
+      "seed": 42
+    },
+    "performance": {
+      "family": "performance",
+      "point_algorithm": "RandomForestRegressor",
+      "interval_algorithm": "HistGradientBoostingRegressor quantile loss",
+      "quantiles": [
+        0.05,
+        0.95
+      ],
+      "interval_level": 0.9,
+      "n_estimators": 200,
+      "max_iter": 300,
+      "interval_calibration": "multiplicative scale on engine-disjoint split",
+      "calibration_scale_factor": 1.05,
+      "seed": 42
+    },
+    "forecasting": {
+      "family": "forecasting",
+      "algorithm": "pmdarima AutoARIMA (ARIMA/SARIMA auto)",
+      "sensors": [
+        "s6",
+        "s20",
+        "s21"
+      ],
+      "horizon_cycles": 10,
+      "seed": 42
+    }
+  },
+  "metrics": {
+    "anomaly": {
+      "proxy_auc": 0.7143124346568823
+    },
+    "failure": {
+      "auc": 0.9847305198575684,
+      "average_precision": 0.9330691443206695,
+      "brier": 0.03593358757107778,
+      "log_loss": 0.11915857639187907
+    },
+    "performance": {
+      "rmse": 20.80078707957133,
+      "nasa_score": 145496.5080271404,
+      "interval_coverage": 0.8771275578504494,
+      "interval_width": 53.44501944179464
+    },
+    "forecasting": {
+      "mape": 0.5305307241233895,
+      "mape_ratio_vs_persistence": 1.0491650321058041
+    }
+  },
+  "forecast_detail": {
+    "sensors": [
+      "s6",
+      "s20",
+      "s21"
+    ],
+    "engine_count": 30,
+    "mape": 0.5305307241233895,
+    "mape_by_sensor": {
+      "s6": 0.5294133322726998,
+      "s20": 0.5311881161102908,
+      "s21": 0.5309907239871782
+    },
+    "persistence_mape": 0.5056694684710837,
+    "mape_ratio_vs_persistence": 1.0491650321058041
+  },
+  "checks": {
+    "failure": true,
+    "rul": true,
+    "forecast": false,
+    "anomaly": true
+  },
+  "all_passed": false,
+  "artifact_paths": {
+    "anomaly": "/Users/caephas/Downloads/side-projects/industrial-ml-pipeline/artifacts/runs/run-20260903-095304-42/anomaly/model.joblib",
+    "failure": "/Users/caephas/Downloads/side-projects/industrial-ml-pipeline/artifacts/runs/run-20260903-095304-42/failure/model.joblib",
+    "performance": "/Users/caephas/Downloads/side-projects/industrial-ml-pipeline/artifacts/runs/run-20260903-095304-42/performance/model.joblib",
+    "forecasting": "/Users/caephas/Downloads/side-projects/industrial-ml-pipeline/artifacts/runs/run-20260903-095304-42/forecasting/model.joblib"
+  }
+}

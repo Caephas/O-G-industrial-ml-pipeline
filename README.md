@@ -36,5 +36,12 @@ feature Parquet files under `data/processed/` and a baseline report under
 make baselines
 ```
 
-Model training, lifecycle simulation, and the API service are in active
-development.
+Train and evaluate the four model families (anomaly, failure, RUL, forecasting)
+against the committed thresholds. Artifacts and run metadata are written under
+`artifacts/runs/<run-id>/`:
+
+```bash
+make train
+```
+
+Lifecycle simulation and the API service are in active development.
