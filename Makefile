@@ -3,7 +3,7 @@ VENV ?= .venv
 PY := $(VENV)/bin/python
 PIP := $(VENV)/bin/pip
 
-.PHONY: help setup install test lint check fetch baselines train clean
+.PHONY: help setup install test lint check fetch baselines train demo clean
 
 help: ## Show available targets
 	@grep -E '^[a-zA-Z_-]+:.*?## ' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "  %-10s %s\n", $$1, $$2}'
@@ -32,6 +32,9 @@ baselines: ## Build features and compute FD002 baselines
 
 train: ## Train and evaluate the 4-model DAG
 	$(PY) -m pipeline.cli train
+
+demo: ## Run the drift -> retrain -> shadow -> promote lifecycle simulation
+	$(PY) scripts/lifecycle_sim.py
 
 clean: ## Remove local caches and build outputs
 	rm -rf .pytest_cache .ruff_cache build dist *.egg-info

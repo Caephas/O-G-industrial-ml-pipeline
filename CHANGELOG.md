@@ -34,5 +34,15 @@ All notable changes to this project are documented here.
   self-describing joblib artifacts (FR-09, FR-10, FR-16)
 - CLI (`train` / `evaluate` / `predict`) and model tests (FR-17)
 - Training runbook (FR-18)
+- SQLite-backed model registry with transactional staging -> production ->
+  archived transitions, sequential versions, and automatic archival of
+  superseded production models (FR-10)
+- PSI drift detection with healthy-deployment reference, variance-filtered
+  features, aggregate trigger rule, and cooldown (FR-12)
+- Shadow-mode dual quality/latency gates over 50 predictions with promotion /
+  archival decisions (FR-11)
+- Isolated retrain worker (separate process) and seeded lifecycle simulation
+  demonstrating drift -> retrain -> shadow -> promote -> archive (FR-12)
+- Registry, drift, shadow, and worker tests (FR-17)
 - ADRs for typed contracts, dependency pinning, and repository licensing
   (FR-16)

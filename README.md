@@ -44,4 +44,14 @@ against the committed thresholds. Artifacts and run metadata are written under
 make train
 ```
 
-Lifecycle simulation and the API service are in active development.
+Run the lifecycle simulation: the champion serves a replayed stream, PSI
+drift triggers an isolated retrain worker, and the candidate shadows the
+champion until the dual quality/latency gates decide promotion:
+
+```bash
+make demo
+```
+
+Events land in `artifacts/lifecycle/sim_events.jsonl` and registry state is
+queryable from `artifacts/registry/registry.db`. The API service is in active
+development.
