@@ -12,6 +12,8 @@ REST inference API + live dashboard → one-command Docker run.
 Foundation complete: repository layout, pinned dependencies, frozen interface
 contracts, deterministic test fixtures, and CI are in place.
 
+System design and architecture diagrams: [docs/architecture.md](docs/architecture.md).
+
 ## Quickstart
 
 ```bash
@@ -24,6 +26,14 @@ automatic mirror fallback):
 
 ```bash
 make fetch
+```
+
+Build regime-aware features and compute the evaluation baselines (writes
+feature Parquet files under `data/processed/` and a baseline report under
+`artifacts/baselines/`):
+
+```bash
+make baselines
 ```
 
 Model training, lifecycle simulation, and the API service are in active

@@ -18,5 +18,12 @@ All notable changes to this project are documented here.
 - Data quality gates with blocking semantics: missing values, constant
   sensors, per-regime zero variance, class imbalance (FR-02)
 - Loader, quality gate, and fetch script tests (FR-17)
+- System architecture documentation with C4, data-flow, model-DAG, lifecycle,
+  and deployment diagrams (FR-18)
+- Regime-aware feature pipeline: seeded 6-regime encoder, per-regime
+  normalization, chronological 6-stat rolling windows (FR-03, FR-16)
+- Evaluation harness: labels, engine-disjoint splits, metric implementations,
+  baseline models, committed thresholds (FR-04)
+- Feature engineering and evaluation harness tests (FR-17)
 - ADRs for typed contracts, dependency pinning, and repository licensing
   (FR-16)

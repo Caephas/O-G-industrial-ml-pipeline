@@ -1,0 +1,42 @@
+{
+  "subset": "FD002",
+  "config": {
+    "window_size": 5,
+    "failure_horizon_cycles": 30,
+    "forecast_horizon_cycles": 10,
+    "val_fraction": 0.2,
+    "seed": 42
+  },
+  "splits": {
+    "train_engines": 208,
+    "validation_engines": 52,
+    "train_rows": 43301,
+    "validation_rows": 10458
+  },
+  "failure_baseline": {
+    "prior": 0.14891111059790768,
+    "auc": 0.5,
+    "average_precision": 0.1541403710078409,
+    "brier": 0.1304084621978409,
+    "log_loss": 0.42993111436526665
+  },
+  "rul_baseline": {
+    "constant": 104.0,
+    "rmse": 45.52500526543265,
+    "nasa_score": 17967116.74685146
+  },
+  "forecast_baseline": {
+    "sensors": [
+      "s6",
+      "s20",
+      "s21"
+    ],
+    "persistence_mape": {
+      "s6": 0.618404,
+      "s20": 0.612871,
+      "s21": 0.613183
+    },
+    "mean_persistence_mape": 0.6148196526106631
+  },
+  "generated_at": "2026-09-03T09:34:49.903308+00:00"
+}
