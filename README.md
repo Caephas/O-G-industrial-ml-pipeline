@@ -19,5 +19,12 @@ make setup
 make check
 ```
 
-Dataset download, model training, lifecycle simulation, and the API service are
-in active development.
+Fetch the NASA C-MAPSS dataset (12 MB download; verified by checksum, with an
+automatic mirror fallback):
+
+```bash
+make fetch
+```
+
+Model training, lifecycle simulation, and the API service are in active
+development.
