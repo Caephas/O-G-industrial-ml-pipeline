@@ -1,0 +1,15 @@
+{
+  "dataset": "CMAPSS",
+  "expected_md5": "79a22f36e80606c69d0e9e4da5bb2b7a",
+  "archive": "/Users/caephas/Downloads/side-projects/industrial-ml-pipeline/data/raw/CMAPSSData.zip",
+  "downloads": [
+    {
+      "source": "https://data.nasa.gov/docs/legacy/CMAPSSData.zip",
+      "ok": true,
+      "md5": "79a22f36e80606c69d0e9e4da5bb2b7a",
+      "bytes": 12425978,
+      "attempted_at": "2026-09-03T09:21:35.707925+00:00"
+    }
+  ],
+  "extracted_at": "2026-09-03T09:21:35.780883+00:00"
+}

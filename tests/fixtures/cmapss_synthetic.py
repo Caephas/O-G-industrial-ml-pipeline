@@ -14,6 +14,8 @@ from dataclasses import dataclass
 import numpy as np
 import pandas as pd
 
+from pipeline.data.loader import COLUMNS
+
 REGIME_CENTROIDS = np.array(
     [
         [0.0, 0.0, 100.0],
@@ -26,9 +28,6 @@ REGIME_CENTROIDS = np.array(
     dtype=float,
 )
 
-SETTINGS_COLUMNS = ["op1", "op2", "op3"]
-SENSOR_COLUMNS = [f"s{i}" for i in range(1, 22)]
-COLUMNS = ["unit", "cycle", *SETTINGS_COLUMNS, *SENSOR_COLUMNS]
 N_REGIMES = REGIME_CENTROIDS.shape[0]
 
 

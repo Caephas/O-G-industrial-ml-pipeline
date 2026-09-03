@@ -3,7 +3,6 @@ VENV ?= .venv
 PY := $(VENV)/bin/python
 PIP := $(VENV)/bin/pip
 
-# fetch/train/serve/demo targets are added by their feature milestones.
 .PHONY: help setup install test lint check clean
 
 help: ## Show available targets
@@ -24,6 +23,9 @@ lint: ## Lint the codebase
 	$(PY) -m ruff check .
 
 check: lint test ## Lint + test
+
+fetch: ## Download and verify the NASA C-MAPSS dataset
+	$(PY) scripts/fetch_cmapss.py
 
 clean: ## Remove local caches and build outputs
 	rm -rf .pytest_cache .ruff_cache build dist *.egg-info
