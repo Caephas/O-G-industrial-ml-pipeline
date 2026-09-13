@@ -56,5 +56,7 @@ All notable changes to this project are documented here.
 - Final documentation: README portfolio framing, architecture reconciliation,
   model cards per family, container runbook (FR-18)
 - Bootstrap marker tests and compose configuration checks (FR-17)
+- Acceptance evidence: requirement-by-requirement verification matrix and a
+  recorded end-to-end demo walkthrough (FR-18)
 - ADRs for typed contracts, dependency pinning, and repository licensing
   (FR-16)

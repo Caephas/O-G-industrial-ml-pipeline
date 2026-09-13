@@ -34,6 +34,9 @@ Model cards per family: [anomaly](docs/model-cards/anomaly.md),
 [performance / RUL](docs/model-cards/performance.md),
 [forecasting](docs/model-cards/forecasting.md).
 
+Evidence: [verification and acceptance matrix](docs/verification.md) ·
+[end-to-end demo walkthrough](docs/demo.md).
+
 ## Quickstart
 
 ```bash
