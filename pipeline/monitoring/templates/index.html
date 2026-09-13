@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>industrial-ml-pipeline — Operations</title>
+    <script src="/static/htmx.min.js" defer></script>
+    <style>
+      :root { color-scheme: light dark; }
+      body {
+        font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+        margin: 0 auto; max-width: 1100px; padding: 1rem; line-height: 1.45;
+      }
+      header { display: flex; justify-content: space-between; align-items: baseline; }
+      h1 { font-size: 1.4rem; } h2 { font-size: 1.1rem; }
+      .cards { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
+      .card { border: 1px solid #444; border-radius: 8px; padding: 0.8rem 1rem; overflow-x: auto; }
+      table { border-collapse: collapse; width: 100%; font-size: 0.9rem; }
+      th, td { border: 1px solid #666; padding: 0.3rem 0.5rem; text-align: left; vertical-align: top; }
+      th { background: #00000022; }
+      .pill { border-radius: 999px; padding: 0.05rem 0.6rem; font-size: 0.8rem; }
+      .staging { background: #b5890022; } .production { background: #2e7d3222; }
+      .archived { background: #55555533; }
+      footer { margin-top: 2rem; color: #888; font-size: 0.8rem; }
+      a { color: inherit; }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>industrial-ml-pipeline</h1>
+      <span>REST inference + lifecycle operations</span>
+    </header>
+
+    <section class="card" aria-labelledby="health-heading">
+      <h2 id="health-heading">Service health</h2>
+      <table>
+        <tbody>
+          <tr><th scope="row">Predictions</th><td>{{ health.total_predictions }}</td></tr>
+          <tr><th scope="row">Errors</th><td>{{ health.errors }}</td></tr>
+          <tr><th scope="row">p50 / p95 latency (ms)</th>
+              <td>{{ health.p50_latency_ms }} / {{ health.p95_latency_ms }}</td></tr>
+          <tr><th scope="row">Uptime (s)</th><td>{{ health.uptime_seconds }}</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <div class="cards">
+      <section class="card"
+               id="registry-panel"
+               hx-get="/dashboard/partials/registry"
+               hx-trigger="every 10s"
+               hx-swap="innerHTML"
+               aria-labelledby="registry-heading">
+        <h2 id="registry-heading">Model registry</h2>
+        {% include "partials/registry.html" %}
+      </section>
+
+      <section class="card"
+               id="drift-panel"
+               hx-get="/dashboard/partials/drift"
+               hx-trigger="every 10s"
+               hx-swap="innerHTML"
+               aria-labelledby="drift-heading">
+        <h2 id="drift-heading">Drift</h2>
+        {% include "partials/drift.html" %}
+      </section>
+
+      <section class="card"
+               id="gates-panel"
+               hx-get="/dashboard/partials/gates"
+               hx-trigger="every 10s"
+               hx-swap="innerHTML"
+               aria-labelledby="gates-heading">
+        <h2 id="gates-heading">Lifecycle events</h2>
+        {% include "partials/gates.html" %}
+      </section>
+
+      <section class="card"
+               id="predictions-panel"
+               hx-get="/dashboard/partials/predictions"
+               hx-trigger="every 10s"
+               hx-swap="innerHTML"
+               aria-labelledby="predictions-heading">
+        <h2 id="predictions-heading">Recent predictions</h2>
+        {% include "partials/predictions.html" %}
+      </section>
+    </div>
+
+    <footer>NASA C-MAPSS FD002 · htmx 2.0.10 (BSD-2-Clause)</footer>
+  </body>
+</html>

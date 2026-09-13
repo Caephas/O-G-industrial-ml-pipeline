@@ -3,7 +3,7 @@ VENV ?= .venv
 PY := $(VENV)/bin/python
 PIP := $(VENV)/bin/pip
 
-.PHONY: help setup install test lint check fetch baselines train demo clean
+.PHONY: help setup install test lint check fetch baselines train demo serve clean
 
 help: ## Show available targets
 	@grep -E '^[a-zA-Z_-]+:.*?## ' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "  %-10s %s\n", $$1, $$2}'
@@ -35,6 +35,9 @@ train: ## Train and evaluate the 4-model DAG
 
 demo: ## Run the drift -> retrain -> shadow -> promote lifecycle simulation
 	$(PY) scripts/lifecycle_sim.py
+
+serve: ## Serve the REST API and htmx dashboard (uvicorn factory)
+	$(VENV)/bin/uvicorn pipeline.api.server:create_app --factory --host 127.0.0.1 --port 8000
 
 clean: ## Remove local caches and build outputs
 	rm -rf .pytest_cache .ruff_cache build dist *.egg-info

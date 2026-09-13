@@ -44,5 +44,17 @@ All notable changes to this project are documented here.
 - Isolated retrain worker (separate process) and seeded lifecycle simulation
   demonstrating drift -> retrain -> shadow -> promote -> archive (FR-12)
 - Registry, drift, shadow, and worker tests (FR-17)
+- REST inference API: schema-first `/v1/predict`, registry-backed model
+  loading, RFC 7807 problem details, `/v1/models` and `/health` (FR-13)
+- Serving health tracker with p50/p95 latency and recent-prediction history
+  (FR-14)
+- htmx operations dashboard with registry, drift, lifecycle, and prediction
+  panels (FR-14)
+- API serving tests (FR-17)
+- Docker Compose deployment: one image, idempotent container bootstrap,
+  named volumes, healthcheck, on-demand worker profile (FR-15)
+- Final documentation: README portfolio framing, architecture reconciliation,
+  model cards per family, container runbook (FR-18)
+- Bootstrap marker tests and compose configuration checks (FR-17)
 - ADRs for typed contracts, dependency pinning, and repository licensing
   (FR-16)

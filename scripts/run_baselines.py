@@ -20,7 +20,7 @@ import numpy as np  # noqa: E402
 
 from pipeline.config import get_settings  # noqa: E402
 from pipeline.data.features import feature_columns, prepare_features, save_features  # noqa: E402
-from pipeline.data.loader import load_processed  # noqa: E402
+from pipeline.data.loader import load_dataset, load_processed, save_processed  # noqa: E402
 from pipeline.eval.baselines import (  # noqa: E402
     evaluate_failure_baseline,
     evaluate_rul_baseline,
@@ -30,6 +30,7 @@ from pipeline.eval.baselines import (  # noqa: E402
 )
 from pipeline.eval.labels import add_targets  # noqa: E402
 from pipeline.eval.splits import split_features  # noqa: E402
+from pipeline.schemas.artifact import DataProvenance  # noqa: E402
 
 
 def _top_degradation_sensors(train_features, count: int) -> list[str]:
@@ -40,6 +41,15 @@ def _top_degradation_sensors(train_features, count: int) -> list[str]:
 
 def main() -> None:
     settings = get_settings()
+    if not (settings.processed_dir / "FD002_train.parquet").exists():
+        # Self-contained processing: raw archive -> validated Parquet + manifest.
+        raw_data = load_dataset("FD002")
+        provenance = DataProvenance(
+            subset="FD002",
+            source="CMAPSSData.zip",
+            row_count=len(raw_data.train),
+        )
+        save_processed(raw_data, provenance=provenance)
     data = load_processed("FD002")
     train_features, test_features, encoder = prepare_features(
         data.train,

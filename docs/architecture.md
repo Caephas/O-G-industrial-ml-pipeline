@@ -7,18 +7,16 @@ end-to-end predictive-maintenance pipeline on the NASA C-MAPSS turbofan
 dataset. It describes the system's containers, components, data flows, model
 lifecycle, serving surface, and deployment topology. Diagrams reflect
 decisions that are already frozen (interface contracts, data-layer behavior,
-model DAG topology); components that are still under construction are marked
-*planned*.
+model DAG topology). Every component described here is implemented; Docker
+Compose is the containerization layer.
 
 All design decisions trace to requirement IDs (FR-xx) defined in the
 development plan.
 
 ## 1. Dependency Inventory
 
-Versions marked *pinned* are declared in `pyproject.toml` and their official
-docs were fetched during implementation (ADR 0002). Versions marked *planned*
-were researched during design; exact pins are added when the feature that uses
-them is implemented.
+Versions marked *pinned* are declared in `pyproject.toml`; their official docs
+were fetched during implementation (ADR 0002).
 
 | Dependency | Version | Official docs URL | Verified? | Key facts |
 |------------|---------|-------------------|-----------|-----------|
@@ -29,13 +27,13 @@ them is implemented.
 | pydantic-settings | 2.15.0 (pinned) | docs.pydantic.dev/2.13 | yes | `BaseSettings`, `env_prefix`, `env_file`, `extra="ignore"` |
 | pytest | 9.1.1 (pinned) | docs.pytest.org/stable | yes | fixtures, `tmp_path`, scoped sharing |
 | ruff | 0.16.5 (pinned) | docs.astral.sh/ruff | yes | config via `[tool.ruff.lint]` |
-| scikit-learn | 1.9.0 (planned) | scikit-learn.org/stable | yes | IsolationForest, RandomForest, `CalibratedClassifierCV` (Platt/sigmoid) |
-| scipy | 1.17.1 (planned) | docs.scipy.org/doc/scipy | yes | Python ≥3.11 pin (1.18+ requires 3.12); stats for PSI binning |
-| statsmodels | 0.15.0 (planned) | statsmodels.org/stable | yes | ARIMA fallback |
-| pmdarima | 2.1.1 (planned) | alkaline-ml.com/pmdarima | yes | AutoARIMA with seasonal detection |
-| fastapi | 0.141.1 (planned) | fastapi.tiangolo.com | yes | REST framework; OpenAPI from pydantic models |
-| uvicorn | 0.52.4 (planned) | uvicorn.dev | docs host unreachable from sandbox; GitHub README + PyPI verified | ASGI server; re-verify when the serving milestone starts (MEDIUM risk) |
-| jinja2 | 3.1.6 (planned) | jinja.palletsprojects.com | yes | htmx dashboard templates |
+| scikit-learn | 1.9.0 (pinned) | scikit-learn.org/stable | yes | IsolationForest, RandomForest, Platt calibration |
+| scipy | 1.17.1 (pinned) | docs.scipy.org/doc/scipy | yes | Python ≥3.11 pin (1.18+ requires 3.12) |
+| statsmodels | 0.15.0 (pinned) | statsmodels.org/stable | yes | ARIMA fallback |
+| pmdarima | 2.1.1 (pinned) | alkaline-ml.com/pmdarima | yes | AutoARIMA with linear trend and capped order |
+| fastapi | 0.141.1 (pinned) | fastapi.tiangolo.com | yes | REST framework; OpenAPI from pydantic models |
+| uvicorn | 0.52.4 (pinned) | uvicorn.dev | yes | ASGI server via compose |
+| jinja2 | 3.1.6 (pinned) | jinja.palletsprojects.com | yes | htmx dashboard templates |
 
 ## 2. Architecture Overview
 
@@ -121,14 +119,14 @@ flowchart TB
     fetch["fetch_cmapss<br/>multi-source · md5 · provenance"]
     loader["loader<br/>raw text → validated frames"]
     quality["quality gates<br/>nan · constant · per-regime · imbalance"]
-    features["features (planned)<br/>regime id · rolling windows · 6 stats/sensor"]
-    splitter["eval harness (planned)<br/>engine-disjoint splits · baselines · metrics"]
-    models["model families (planned)<br/>anomaly · failure · RUL · forecasting"]
-    orchestrator["orchestrator (planned)<br/>4-model DAG · run metadata"]
-    registry["registry (planned)<br/>staging → production → archived"]
-    drift["drift detector (planned)<br/>PSI > 0.20"]
-    shadow["shadow evaluator (planned)<br/>dual quality/latency gates · 50 predictions"]
-    trainer["retrain worker (planned)<br/>isolated process · cooldown"]
+    features["features<br/>regime id · rolling windows · 6 stats/sensor"]
+    splitter["eval harness<br/>engine-disjoint splits · baselines · metrics"]
+    models["model families<br/>anomaly · failure · RUL · forecasting"]
+    orchestrator["orchestrator<br/>4-model DAG · run metadata"]
+    registry["registry<br/>staging → production → archived"]
+    drift["drift detector<br/>PSI > 0.20"]
+    shadow["shadow evaluator<br/>dual quality/latency gates · 50 predictions"]
+    trainer["retrain worker<br/>isolated process · cooldown"]
 
     raw[("data/raw")]
     processed[("data/processed")]
@@ -404,8 +402,8 @@ flowchart TB
 |-------------|-----------|-----------------|-----------|
 | FR-01 | fetch script, loader | Checksummed multi-source acquisition; validated parsing | Reproducible, layout-safe ingestion |
 | FR-02 | quality gates | Pass/warn/fail semantics | Stop on poison, defer to feature pipeline |
-| FR-03 | features (planned) | Regime id + rolling 6-stat windows | Multi-regime FD002 normalization |
-| FR-04 | eval harness (planned) | Engine-disjoint splits, baselines, pre-committed metrics | No temporal leakage, honest evaluation |
+| FR-03 | features | Regime id + rolling 6-stat windows | Multi-regime FD002 normalization |
+| FR-04 | eval harness | Engine-disjoint splits, baselines, pre-committed metrics | No temporal leakage, honest evaluation |
 | FR-05 | anomaly model | Isolation Forest, adaptive contamination | Unsupervised early-warning signal |
 | FR-06 | failure model | RF + Platt calibration | Calibrated probabilities for gates |
 | FR-07 | RUL model | RF point + gradient-boosted quantile interval | Point estimate with uncertainty |
