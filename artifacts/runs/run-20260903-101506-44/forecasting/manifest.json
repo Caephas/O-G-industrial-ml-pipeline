@@ -1,0 +1,44 @@
+{
+  "schema_version": "1.0",
+  "artifact_id": "forecasting-run-20260903-101506-44",
+  "family": "forecasting",
+  "version": 1,
+  "stage": "staging",
+  "created_at": "2026-09-03T10:15:09.919757Z",
+  "run_id": "run-20260903-101506-44",
+  "subset": "FD002",
+  "metrics": {
+    "mape": 0.06190198763134866,
+    "mape_ratio_vs_persistence": 0.6548717559888418
+  },
+  "features": [
+    "s11",
+    "s4",
+    "s15"
+  ],
+  "thresholds": {
+    "mape_ratio_vs_persistence_max": 0.97
+  },
+  "training_config": {
+    "subset": "FD002",
+    "seed": 44,
+    "window_size": 5,
+    "features_per_sensor": 6,
+    "failure_horizon_cycles": 30,
+    "rul_clip": 125,
+    "forecast_horizon_cycles": 10
+  },
+  "data_provenance": {
+    "subset": "FD002",
+    "source": "processed-parquet",
+    "downloaded_at": null,
+    "sha256": null,
+    "row_count": 53759
+  },
+  "git_sha": "3eac111",
+  "artifact_path": "/Users/caephas/Downloads/side-projects/industrial-ml-pipeline/artifacts/runs/run-20260903-101506-44/forecasting/model.joblib",
+  "files": [
+    "model.joblib",
+    "manifest.json"
+  ]
+}

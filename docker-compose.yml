@@ -1,0 +1,37 @@
+services:
+  api:
+    build: .
+    image: industrial-ml-pipeline:latest
+    ports:
+      - "8000:8000"
+    volumes:
+      - data:/app/data
+      - artifacts:/app/artifacts
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "python",
+          "-c",
+          "import urllib.request,sys; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:8000/health', timeout=3).status == 200 else 1)",
+        ]
+      interval: 15s
+      timeout: 5s
+      retries: 60
+      start_period: 300s
+    restart: unless-stopped
+
+  worker:
+    image: industrial-ml-pipeline:latest
+    profiles: ["tools"]
+    command: ["python", "scripts/lifecycle_sim.py"]
+    volumes:
+      - data:/app/data
+      - artifacts:/app/artifacts
+    depends_on:
+      api:
+        condition: service_healthy
+
+volumes:
+  data:
+  artifacts:

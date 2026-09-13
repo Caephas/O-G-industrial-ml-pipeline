@@ -1,0 +1,20 @@
+{% if drift_events %}
+<table>
+  <thead>
+    <tr><th scope="col">Feature</th><th scope="col">PSI</th>
+        <th scope="col">Threshold</th><th scope="col">Triggered</th></tr>
+  </thead>
+  <tbody>
+    {% for event in drift_events[-10:] %}
+    <tr>
+      <td>{{ event.feature }}</td>
+      <td>{{ "%.3f" | format(event.psi) }}</td>
+      <td>{{ event.threshold }}</td>
+      <td>{{ event.triggered }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p>No drift events recorded.</p>
+{% endif %}

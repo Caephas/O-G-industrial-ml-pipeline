@@ -1,0 +1,25 @@
+# Acceptance thresholds (FR-04)
+#
+# Calibrated against the FD002 baselines measured on 2026-09-03
+# (52-engine validation split, seed 42):
+#   failure majority baseline:  auc=0.500, brier=0.1304, log_loss~0.421
+#   RUL constant baseline (104.0 cycles): rmse=45.53
+#   forecasting persistence baseline (s6/s20/s21): mape=0.6148
+
+failure:
+  min_auc: 0.85
+  min_average_precision: 0.35
+  max_brier: 0.124          # >= 5% improvement over the prior baseline
+  max_log_loss: 0.40
+
+rul:
+  relative_rmse_gain_vs_baseline: 0.10   # rmse <= 41.0 vs constant baseline 45.53
+  max_rmse: 50
+  interval_coverage_min: 0.80
+  interval_coverage_max: 0.98
+
+forecast:
+  mape_ratio_vs_persistence_max: 0.97
+
+anomaly:
+  proxy_auc_min: 0.70   # provisional; scored on late-life proxy windows

@@ -1,0 +1,22 @@
+{% if health.recent_predictions %}
+<table>
+  <thead>
+    <tr><th scope="col">Engine</th><th scope="col">Cycle</th>
+        <th scope="col">P(failure)</th><th scope="col">RUL</th>
+        <th scope="col">Anomaly</th></tr>
+  </thead>
+  <tbody>
+    {% for item in health.recent_predictions %}
+    <tr>
+      <td>{{ item.engine_id }}</td>
+      <td>{{ item.final_cycle }}</td>
+      <td>{{ item.failure_probability }}</td>
+      <td>{{ item.rul_point }}</td>
+      <td>{{ item.anomaly_flag }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p>No predictions served yet.</p>
+{% endif %}

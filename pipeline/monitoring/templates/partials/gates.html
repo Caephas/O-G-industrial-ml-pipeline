@@ -1,0 +1,18 @@
+{% if events %}
+<ul style="margin:0; padding-left:1.2rem;">
+  {% for event in events[-15:] %}
+  <li>
+    {% if event.event_type == "stage_transition" %}
+      {{ event.artifact_id }}: {{ event.from_stage or "none" }} → {{ event.to_stage }}
+    {% elif event.event_type == "shadow_eval" %}
+      shadow: quality={{ event.quality_pass }} latency={{ event.latency_pass }}
+      promoted={{ event.promoted }}
+    {% else %}
+      {{ event.event_type }} @ {{ event.occurred_at.strftime("%H:%M:%S") }}
+    {% endif %}
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+<p>No lifecycle events recorded.</p>
+{% endif %}
